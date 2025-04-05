@@ -27,6 +27,7 @@ mkdir -p outputafl
 
 [ -d "output_final" ] && rm -rf output_final
 
+[ ! -d "tests" ] && mkdir -p tests
 [ ! -d "tests/testcases" ] && mkdir -p tests/testcases
 
 # Compilation du code avec afl-clang-fast et gcov
@@ -37,18 +38,23 @@ make -f $OUTPUT_MAKEFILE
 
 # Execution de l'analyse de AFL++
 clear
-if [ -n "$DISPLAY" ]; then
-    tmux new-session -d -s afl "timeout $LUNCH_TIME afl-fuzz -i tests/testcases -o outputafl $INPUT_OPTION -t $DELAY+ -M fuzzer01 -- ./$OUTPUT_BINARY @@"
-    for ((i=2; i<=$NB_COEURS; i++)); do
-        tmux new-window -t afl "timeout $LUNCH_TIME afl-fuzz -i tests/testcases -o outputafl $INPUT_OPTION -t $DELAY+ -S fuzzer$(printf "%02d" $i) -- ./$OUTPUT_BINARY @@"
-    done
-    tmux attach-session -t afl
+if [ "$(ls -A tests/testcases)" ]; then
+    if [ -n "$DISPLAY" ]; then
+        tmux new-session -d -s afl "timeout $LUNCH_TIME afl-fuzz -i tests/testcases -o outputafl $INPUT_OPTION -t $DELAY+ -M fuzzer01 -- ./$OUTPUT_BINARY @@"
+        for ((i=2; i<=$NB_COEURS; i++)); do
+            tmux new-window -t afl "timeout $LUNCH_TIME afl-fuzz -i tests/testcases -o outputafl $INPUT_OPTION -t $DELAY+ -S fuzzer$(printf "%02d" $i) -- ./$OUTPUT_BINARY @@"
+        done
+        tmux attach-session -t afl
+    else
+        timeout $LUNCH_TIME afl-fuzz -i tests/testcases -o outputafl $INPUT_OPTION -t $DELAY+ -M fuzzer01 -- ./$OUTPUT_BINARY @@ &
+        for ((i=2; i<=$NB_COEURS; i++)); do
+            timeout $LUNCH_TIME afl-fuzz -i tests/testcases -o outputafl $INPUT_OPTION -t $DELAY+ -S fuzzer$(printf "%02d" $i) -- ./$OUTPUT_BINARY @@ &
+        done
+        wait
+    fi
 else
-    timeout $LUNCH_TIME afl-fuzz -i tests/testcases -o outputafl $INPUT_OPTION -t $DELAY+ -M fuzzer01 -- ./$OUTPUT_BINARY @@ &
-    for ((i=2; i<=$NB_COEURS; i++)); do
-        timeout $LUNCH_TIME afl-fuzz -i tests/testcases -o outputafl $INPUT_OPTION -t $DELAY+ -S fuzzer$(printf "%02d" $i) -- ./$OUTPUT_BINARY @@ &
-    done
-    wait
+    echo "Aucun fichier de test trouvé dans tests/testcases. Veuillez ajouter des fichiers de test."
+    exit 1
 fi
 
 wait

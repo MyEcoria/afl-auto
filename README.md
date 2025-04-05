@@ -41,7 +41,7 @@ This command mounts your current working directory (`$(pwd)`) into the container
 If you want to use a graphical interface to monitor the fuzzing process, ensure that your system supports X11 forwarding and run the following command:
 
 ```bash
-docker run --rm -it -v $(pwd):/src -e LUNCH_TIME=30 -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix epitfl:latest
+docker run --rm -it -v $(pwd):/src -e LUNCH_TIME=30 -e DISPLAY=$DISPLAY epitfl:latest
 ```
 
 This command additionally forwards the X11 display (`DISPLAY=$DISPLAY`) and mounts the X11 socket (`/tmp/.X11-unix`) to enable GUI support.
