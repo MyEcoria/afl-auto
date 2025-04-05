@@ -9,7 +9,7 @@ This document describes the environment variables and parameters used by the `af
 - **Default Value**: `300` (5 minutes)
 - **Example Usage**:
     ```bash
-    docker run --rm -it -v $(pwd):/src -e LUNCH_TIME=600 epitfl:latest # 10 minutes
+    docker run --rm -it -v $(pwd):/src -e LUNCH_TIME=600 myecoria/epitfl:latest # 10 minutes
     ```
 
 ### `DELAY`
@@ -17,7 +17,7 @@ This document describes the environment variables and parameters used by the `af
 - **Default Value**: `500`
 - **Example Usage**:
     ```bash
-    docker run --rm -it -v $(pwd):/src -e DELAY=1000 epitfl:latest # 1 second
+    docker run --rm -it -v $(pwd):/src -e DELAY=1000 myecoria/epitfl:latest # 1 second
     ```
 
 ### `DISPLAY`
@@ -25,7 +25,7 @@ This document describes the environment variables and parameters used by the `af
 - **Default Value**: Undefined (headless mode).
 - **Example Usage**:
     ```bash
-    docker run --rm -it -v $(pwd):/src -e DISPLAY=:0 -v /tmp/.X11-unix:/tmp/.X11-unix epitfl:latest
+    docker run --rm -it -v $(pwd):/src -e DISPLAY=:0 -v /tmp/.X11-unix:/tmp/.X11-unix myecoria/epitfl:latest
     ```
 
 ## Script Parameters
@@ -35,7 +35,7 @@ This document describes the environment variables and parameters used by the `af
 - **Default Value**: `Makefile`
 - **Example Usage**:
     ```bash
-    docker run --rm -it -v $(pwd):/src -e MAKEFILE="CustomMakefile" epitfl:latest
+    docker run --rm -it -v $(pwd):/src -e MAKEFILE="CustomMakefile" myecoria/epitfl:latest
     ```
 
 ### `NB_COEURS`
@@ -43,7 +43,7 @@ This document describes the environment variables and parameters used by the `af
 - **Default Value**: 80% of the total CPU cores available on the machine.
 - **Example Usage**:
     ```bash
-    docker run --rm -it -v $(pwd):/src -e NB_COEURS=4 epitfl:latest
+    docker run --rm -it -v $(pwd):/src -e NB_COEURS=4 myecoria/epitfl:latest
     ```
 
 ### `INPUT_OPTION`
@@ -51,24 +51,24 @@ This document describes the environment variables and parameters used by the `af
 - **Default Value**: `-m none -c 0`
 - **Example Usage**:
     ```bash
-    docker run --rm -it -v $(pwd):/src -e INPUT_OPTION="-m 512 -c 1" epitfl:latest
+    docker run --rm -it -v $(pwd):/src -e INPUT_OPTION="-m 512 -c 1" myecoria/epitfl:latest
     ```
 
 ## Command Examples
 
 ### Running in Headless Mode
 ```bash
-docker run --rm -it -v $(pwd):/src -e LUNCH_TIME=600 epitfl:latest
+docker run --rm -it -v $(pwd):/src -e LUNCH_TIME=600 myecoria/epitfl:latest
 ```
 
 ### Running in Graphical Mode
 ```bash
-docker run --rm -it -v $(pwd):/src -e LUNCH_TIME=600 -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix epitfl:latest
+docker run --rm -it -v $(pwd):/src -e LUNCH_TIME=600 -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix myecoria/epitfl:latest
 ```
 
 ### Compilation and Fuzzing with Custom Parameters
 ```bash
-docker run --rm -it -v $(pwd):/src -e LUNCH_TIME=1200 -e DELAY=1000 epitfl:latest
+docker run --rm -it -v $(pwd):/src -e LUNCH_TIME=1200 -e DELAY=1000 myecoria/epitfl:latest
 ```
 
 By configuring these variables and parameters, you can tailor the behavior of the `afl-auto` project to your specific needs.
