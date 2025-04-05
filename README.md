@@ -1,5 +1,7 @@
 # AFL Auto Fuzzer
 
+[![Demo](https://res.cloudinary.com/marcomontalbano/image/upload/v1743882438/video_to_markdown/images/youtube--l4c4SGgAcRk-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://youtu.be/l4c4SGgAcRk "Demo")
+
 `afl-auto` is a tool designed to automate the process of fuzz testing using [AFL++](https://github.com/AFLplusplus/AFLplusplus), a powerful and flexible fuzzing framework. Fuzzing is a software testing technique that involves providing invalid, unexpected, or random data as input to a program to uncover bugs, crashes, or vulnerabilities.
 
 ## What is AFL++?
